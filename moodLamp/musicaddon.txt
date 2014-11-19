@@ -1,0 +1,127 @@
+else {
+   //Like a for loop using increment as counter, but exit loop as soon as one of the buttons is pressed
+   while (increment<numIncrements&&digitalRead(advancePin)==HIGH&&digitalRead(prevPin)==HIGH&&digitalRead(powerPin)==HIGH){
+    analogWrite(bidirectionalPin,255*powerMod) ;
+     
+    //Calls various modes depending on which is currently selected
+    //Modes are broken into increments so that they can be interruped part way through if need be (ie button pushed)
+    
+    if (systemState==0){
+      mode0(increment,powerMod); 
+    }
+    
+    else if (systemState==1){
+      mode1(increment,powerMod);
+    }
+    
+    else if (systemState==2){
+      mode2(increment,powerMod);
+    }
+    
+    else if (systemState==3){
+      mode3(increment,powerMod);
+    }
+    
+    else if (systemState==4){
+      mode4(increment,powerMod);
+    }
+    
+    else if (systemState==5){
+      mode4(increment,powerMod); 
+    }
+   
+ increment++; //Increases counter
+  
+ }
+}
+
+
+//These funcitons are the various moods offered by the moodlamp 
+
+void mode0(int increment,double pwrPercent){
+  while(digitalRead(advancePin)==HIGH&&digitalRead(prevPin)==HIGH&&digitalRead(powerPin)==HIGH)
+  {
+      analogWrite(redPin,255-255*powerMod);
+      analogWrite(greenPin,255); 
+      analogWrite(bluePin,255);  
+
+
+}
+
+}
+void mode1(int increment,double pwrPercent){
+      analogWrite(redPin,255);
+      analogWrite(greenPin,255-255*powerMod); 
+      analogWrite(bluePin,255);
+
+blue(increment);
+}
+
+void mode2(int increment,double pwrPercent){
+      analogWrite(redPin,255-255*powerMod);
+      analogWrite(greenPin,255); 
+      analogWrite(bluePin,255-255*powerMod);
+}
+
+void mode3(int increment,double pwrPercent){
+      analogWrite(redPin,255-255*powerMod);
+      analogWrite(greenPin,255-255*powerMod); 
+      analogWrite(bluePin,255);
+}
+
+void mode4(int increment,double pwrPercent){
+      analogWrite(redPin,255-255*powerMod);
+      analogWrite(greenPin,255); 
+      analogWrite(bluePin,255-255*powerMod);
+}
+
+void mode5(int increment,double pwrPercent){
+      analogWrite(redPin,255);
+      analogWrite(greenPin,255-255*powerMod); 
+      analogWrite(bluePin,255-255*powerMod);
+}
+
+void blue (int i)
+{
+int length = 29; // the number of notes
+char notes[] = "GlEEl aGlEElDEa aElGEqDEaal "; // a space represents a rest
+int beats[] = { 1, 1, 1, 1, 4, 7, 1, 1, 1, 1, 2, 3, 2, 1, 7, 1, 1, 2, 1, 3, 1, 2, 3, 2, 1, 2, 7, 4 };
+int tempo = 200;
+
+    if (notes[i] == ' ') {
+      delay(beats[i] * tempo); // rest
+    } else {
+      playNote(notes[i], beats[i] * tempo);
+    }
+    
+    // pause between notes
+    delay(tempo / 2); 
+  
+
+}
+
+
+void playTone(int tone, int duration) {
+  for (long i = 0; i < duration * 1000L; i += tone * 2) {
+    digitalWrite(speakerPin, HIGH);
+    delayMicroseconds(tone);
+    digitalWrite(speakerPin, LOW);
+    delayMicroseconds(tone);
+  }
+}
+
+void playNote(char note, int duration) {
+  
+  char names[] = {'p','o','i','u','y','t','c','r','d','e','f','w','g','a','z','b','C','q','D','E','F','l','G','A','k','B'};
+  int numnotes = 26;
+  int tones[] = {2864,2702,2551,2273,2146,2024,1915,1805,1700,1519,1432,1351,1275,1136,1073,1014,956,919,850,760,716,676,638,568,536,507};
+
+  
+  // play the tone corresponding to the note name
+  for (int i = 0; i < length; i++) {
+    if (names[i] == note) {
+      playTone(tones[i], duration);
+    }
+  }
+}
+
