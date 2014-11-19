@@ -2,8 +2,6 @@
 =========
 Coded by Edwin L. and Pingda L.
 
-Arduino program that will  
-
 ##Installation
  Make sure you have the moodLamp.ino file.  
 If you have Arduino ERW 1.0.5  or newer, to run the program, simply run the ino file.  
